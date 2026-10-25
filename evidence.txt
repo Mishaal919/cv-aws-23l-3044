@@ -1,0 +1,163 @@
+Evidence generated 2026-10-25T20:26:31Z
+
+== caller ==
+------------------------------------------------------------------------------------------------------------------
+|                                                GetCallerIdentity                                               |
++---------+------------------------------------------------------------------------------------------------------+
+|  Account|  043475992098                                                                                        |
+|  Arn    |  arn:aws:sts::043475992098:assumed-role/AccountFullAccessRole/e4489438-d0b1-7050-ff03-db196557f56d   |
+|  UserId |  AROAQUH267YRP5OHP6ELE:e4489438-d0b1-7050-ff03-db196557f56d                                          |
++---------+------------------------------------------------------------------------------------------------------+
+
+== public-access ==
+-------------------------------------
+|       GetPublicAccessBlock        |
++-----------------------------------+
+|| PublicAccessBlockConfiguration  ||
+|+-------------------------+-------+|
+||  BlockPublicAcls        |  True ||
+||  BlockPublicPolicy      |  True ||
+||  IgnorePublicAcls       |  True ||
+||  RestrictPublicBuckets  |  True ||
+|+-------------------------+-------+|
+
+== versioning ==
+-----------------------
+| GetBucketVersioning |
++---------+-----------+
+|  Status |  Enabled  |
++---------+-----------+
+
+== objects ==
+2026-10-25 19:26:44  117.8 KiB site/cv.pdf
+2026-10-25 19:26:42    4.1 KiB site/index.html
+2026-10-25 19:26:43    1.4 KiB site/style.css
+
+Total Objects: 3
+   Total Size: 123.4 KiB
+
+== ec2-policy ==
+{
+    "RoleName": "cv-ec2-role-23l-3044",
+    "PolicyName": "cv-ec2-s3-read-23l-3044",
+    "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "ReadSiteObjects",
+                "Effect": "Allow",
+                "Action": "s3:GetObject",
+                "Resource": "arn:aws:s3:::cv-23l-3044/site/*"
+            },
+            {
+                "Sid": "ListSitePrefixOnly",
+                "Effect": "Allow",
+                "Action": "s3:ListBucket",
+                "Resource": "arn:aws:s3:::cv-23l-3044",
+                "Condition": {
+                    "StringLike": {
+                        "s3:prefix": [
+                            "site/",
+                            "site/*"
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}
+
+== lambda-policy ==
+-- managed policies --
+--------------------------------------------------------------------------------------
+|                              ListAttachedRolePolicies                              |
++------------------------------------------------------------------------------------+
+||                                 AttachedPolicies                                 ||
+|+------------+---------------------------------------------------------------------+|
+||  PolicyArn |  arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole   ||
+||  PolicyName|  AWSLambdaBasicExecutionRole                                        ||
+|+------------+---------------------------------------------------------------------+|
+-- inline policies --
+{
+    "RoleName": "cv-lambda-role-23l-3044",
+    "PolicyName": "cv-lambda-s3-read-23l-3044",
+    "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "ReadSiteObjects",
+                "Effect": "Allow",
+                "Action": "s3:GetObject",
+                "Resource": "arn:aws:s3:::cv-23l-3044/site/*"
+            }
+        ]
+    }
+}
+
+== security-group ==
+[
+    {
+        "GroupId": "sg-0608e85dc5929e6d5",
+        "Name": "cv-sg-23l-3044",
+        "Inbound": [
+            {
+                "Proto": "tcp",
+                "From": 80,
+                "To": 80,
+                "IPv4": [
+                    "0.0.0.0/0"
+                ],
+                "IPv6": [],
+                "PrefixLists": []
+            }
+        ]
+    }
+]
+
+== instance ==
+----------------------------------------------------------------------------------------
+|                                   DescribeInstances                                  |
++-----------------+--------------------------------------------------------------------+
+|  HttpTokens     |  required                                                          |
+|  Id             |  i-03be77256595e4f5e                                               |
+|  InstanceProfile|  arn:aws:iam::043475992098:instance-profile/cv-ec2-role-23l-3044   |
+|  PublicIp       |  13.211.210.74                                                     |
+|  State          |  running                                                           |
+|  Type           |  t3.micro                                                          |
++-----------------+--------------------------------------------------------------------+
+
+== endpoints ==
+http://13.211.210.74/ -> 200 text/html; charset=UTF-8
+http://13.211.210.74/style.css -> 200 text/css
+http://13.211.210.74/cv.pdf -> 200 application/pdf
+https://mrhzgknncijcd3yxke6kmvw57q0ehokg.lambda-url.ap-southeast-2.on.aws/ -> 200 text/html; charset=utf-8
+https://mrhzgknncijcd3yxke6kmvw57q0ehokg.lambda-url.ap-southeast-2.on.aws/style.css -> 200 text/css
+https://mrhzgknncijcd3yxke6kmvw57q0ehokg.lambda-url.ap-southeast-2.on.aws/cv.pdf -> 200 application/pdf
+https://mrhzgknncijcd3yxke6kmvw57q0ehokg.lambda-url.ap-southeast-2.on.aws/anything -> 404 text/html; charset=utf-8
+https://cv-23l-3044.s3.ap-southeast-2.amazonaws.com/site/index.html -> 403 application/xml
+
+== lambda-logs ==
+2026-10-25T20:23:39 {"fn": "cv-func-23l-3044", "path": "/", "status": 200, "ms": 270.3}
+2026-10-25T20:23:39 END RequestId: fe4f0f44-c77d-4f0a-a157-c60354548311
+2026-10-25T20:23:39 REPORT RequestId: fe4f0f44-c77d-4f0a-a157-c60354548311	Duration: 286.02 ms	Billed Duration: 805 ms	Memory Size: 128 MB	Max Memory Used: 100 MB	Init Duration: 518.45 ms
+2026-10-25T20:23:39 START RequestId: daf2044c-3102-4040-a185-a6c08b3576e6 Version: $LATEST
+2026-10-25T20:23:39 {"fn": "cv-func-23l-3044", "path": "/style.css", "status": 200, "ms": 30.3}
+2026-10-25T20:23:39 END RequestId: daf2044c-3102-4040-a185-a6c08b3576e6
+2026-10-25T20:23:39 REPORT RequestId: daf2044c-3102-4040-a185-a6c08b3576e6	Duration: 33.94 ms	Billed Duration: 34 ms	Memory Size: 128 MB	Max Memory Used: 100 MB
+2026-10-25T20:23:39 START RequestId: b5b34bc1-b18b-4c10-bf12-14ca9dc85c0d Version: $LATEST
+2026-10-25T20:23:39 {"fn": "cv-func-23l-3044", "path": "/cv.pdf", "status": 200, "ms": 62.5}
+2026-10-25T20:23:39 END RequestId: b5b34bc1-b18b-4c10-bf12-14ca9dc85c0d
+2026-10-25T20:23:39 REPORT RequestId: b5b34bc1-b18b-4c10-bf12-14ca9dc85c0d	Duration: 69.06 ms	Billed Duration: 70 ms	Memory Size: 128 MB	Max Memory Used: 100 MB
+2026-10-25T20:23:39 START RequestId: 5951820f-2f36-4edf-9d0f-96841cb87932 Version: $LATEST
+2026-10-25T20:23:39 {"fn": "cv-func-23l-3044", "path": "/anything", "status": 404, "ms": 0.0}
+2026-10-25T20:23:39 END RequestId: 5951820f-2f36-4edf-9d0f-96841cb87932
+2026-10-25T20:23:39 REPORT RequestId: 5951820f-2f36-4edf-9d0f-96841cb87932	Duration: 1.46 ms	Billed Duration: 2 ms	Memory Size: 128 MB	Max Memory Used: 100 MB
+
+== log-retention ==
+---------------------------------------------------
+|                DescribeLogGroups                |
++-------------------------------+-----------------+
+|           LogGroup            |  RetentionDays  |
++-------------------------------+-----------------+
+|  /aws/lambda/cv-func-23l-3044 |  7              |
++-------------------------------+-----------------+

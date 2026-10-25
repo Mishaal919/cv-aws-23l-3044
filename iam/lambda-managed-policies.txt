@@ -1,0 +1,2 @@
+Managed policy attached to cv-lambda-role-23l-3044:
+arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
